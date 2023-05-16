@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Toast;
 
 import com.cfd.animdemo.databinding.ActivityMainBinding;
 
@@ -22,9 +21,11 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.open.bringToFront();
+
         binding.open.setOnClickListener(v -> {
-            Toast.makeText(this, "Click", Toast.LENGTH_SHORT).show();
             binding.top.bringToFront();
+
             openLayout();
         });
     }
@@ -44,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
         Animation up = AnimationUtils.loadAnimation(getBaseContext(), R.anim.up);
         up.setDuration(500);
 
+        //------------旋轉180
+        Animation rotate = AnimationUtils.loadAnimation(getBaseContext(), R.anim.rotate);
+        rotate.setDuration(300);
+
 
 
         if (!isOpen) {
@@ -54,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
             binding.bottom.setAnimation(down);
             binding.bottom.setVisibility(View.VISIBLE);
 
+            binding.open.setAnimation(rotate);
+            binding.open.setImageResource(R.drawable.ic_baseline_arrow_drop_up_24);
+
+
         } else {
             isOpen = false;
 
@@ -63,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
             binding.bottom.setAnimation(up);
             binding.bottom.setVisibility(View.GONE);
 
-
+            binding.open.setAnimation(rotate);
+            binding.open.setImageResource(R.drawable.ic_baseline_arrow_drop_down_24);
         }
+
     }
 }
